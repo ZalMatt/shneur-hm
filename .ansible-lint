@@ -1,0 +1,10 @@
+# .ansible-lint
+
+exclude_paths:
+- .cache/
+- .github/
+
+skip_list:
+  - role-name
+
+offline: true
