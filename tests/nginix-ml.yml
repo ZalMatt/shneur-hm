@@ -18,10 +18,9 @@
         state:  present
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: selinux must die
-      command: setenforce 0
-      when: ansible_facts['os_family'] == "RedHat"
-
+      #    - name: selinux must die
+      #command: setenforce 0
+      #when: ansible_facts['os_family'] == "RedHat"
 
 
     - name: debian repo config
@@ -47,6 +46,7 @@
       copy:
         src:  ../defaults/default.conf
         dest: /etc/nginx/conf.d/default.conf
+        mode: '0644'
 
     - name: Got vars
       include_vars:
@@ -56,8 +56,11 @@
       copy:
           content:  "{{ welcome_message }}"
           dest: /tmp/index.html
+          mode: '0644'
+      notify: Restart nginx
 
+  handlers:
     - name: Restart nginx
       systemd:
         name: nginx
-        state:  restarted
+        state:  reloaded

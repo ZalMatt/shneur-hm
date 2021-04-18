@@ -14,9 +14,9 @@
 
     - name: Check nginx version
       assert:
-        that: "http_response.server == 'nginx/1.19.9'"
-        fail_msg: "Bummer: NGINX version must be 1.19.9. Current NGINX version is {{ http_response.server.split('/')[-1] }}"
-        success_msg: "Good Work! NGINX version is 1.19.9"
+        that: "http_response.server == 'nginx/1.19.10'"
+        fail_msg: "Bummer: NGINX version must be 1.19.10. Current NGINX version is {{ http_response.server.split('/')[-1] }}"
+        success_msg: "Good Work! NGINX version is 1.19.10"
 
     - name: Check nginx content
       assert:
