@@ -1,0 +1,21 @@
+---
+- name: install deps
+  apt:
+    pkg:
+    - curl
+    - gnupg2
+    - ca-certificates
+    - lsb-release
+    update_cache: yes
+
+- name: ubuntu add key
+  apt_key:
+    url:  https://nginx.org/keys/nginx_signing.key
+    state:  present
+
+- name: debian repo config
+  apt_repository:
+    repo: "deb http://nginx.org/packages/mainline/ubuntu {{ ansible_facts['distribution_release'] }} nginx"
+    filename: nginx-ml
+    update_cache: yes
+    validate_certs: no

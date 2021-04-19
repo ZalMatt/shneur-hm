@@ -1,0 +1,16 @@
+---
+- name: redhat repo config
+  yum_repository:
+    name: nginx-ml
+    description:  NGINX Mainline repo
+    baseurl:  http://nginx.org/packages/mainline/centos/$releasever/$basearch/
+    gpgcheck: no
+    enabled:  yes
+
+- name: redhat gpg key
+  rpm_key:
+    key:  https://nginx.org/keys/nginx_signing.key
+    state:  present
+
+      #    - name: selinux must die
+      #command: setenforce 0

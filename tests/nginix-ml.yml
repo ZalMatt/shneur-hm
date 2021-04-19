@@ -3,39 +3,14 @@
   become: true
 
   tasks:
-    - name: redhat repo config
-      yum_repository:
-        name: nginx-ml
-        description:  NGINX Mainline repo
-        baseurl:  http://nginx.org/packages/mainline/centos/$releasever/$basearch/
-        gpgcheck: no
-        enabled:  yes
+    - name: redhat detected
+      include_tasks: ../tasks/4centos.yml
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: redhat gpg key
-      rpm_key:
-        key:  https://nginx.org/keys/nginx_signing.key
-        state:  present
-      when: ansible_facts['os_family'] == "RedHat"
-
-      #    - name: selinux must die
-      #command: setenforce 0
-      #when: ansible_facts['os_family'] == "RedHat"
-
-
-    - name: ubuntu add key
-      apt_key:
-        url:  https://nginx.org/keys/nginx_signing.key
-        state:  present
+    - name: ubuntu detected
+      include_tasks: ../tasks/4ubuntu.yml
       when: ansible_facts['os_family'] == "Debian"
 
-    - name: debian repo config
-      apt_repository:
-        repo: "deb http://nginx.org/packages/mainline/ubuntu {{ ansible_facts['distribution_release'] }} nginx"
-        filename: nginx-ml
-        update_cache: yes
-        validate_certs: no
-      when: ansible_facts['os_family'] == "Debian"
 
     - name: Install nginx
       package:
